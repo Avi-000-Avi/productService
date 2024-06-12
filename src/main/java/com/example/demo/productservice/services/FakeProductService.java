@@ -52,9 +52,10 @@ public class FakeProductService implements ProductServices{
     }
 
     @Override
-    public Product updateProduct(Product product) {
+    public Product updateProduct(Long id,Product product) {
         FakeStoreProductDto fakeStoreProductDto = convertProductToDto(product);
-        fakeStoreProductDto =  restTemplate.patchForObject("https://fakestoreapi.com/products/" + product.getId(), fakeStoreProductDto, FakeStoreProductDto.class);
+        fakeStoreProductDto =  restTemplate.patchForObject("https://fakestoreapi.com/products/" + id,
+                fakeStoreProductDto, FakeStoreProductDto.class);
         return convertDtoToProduct(fakeStoreProductDto);
     }
 
@@ -79,5 +80,27 @@ public class FakeProductService implements ProductServices{
         product.setCategory(category);
 
         return product;
+    }
+
+    public static FakeStoreProductDto convertProductToDto(Product product) {
+        if (product == null) {
+            return null;
+        }
+
+        FakeStoreProductDto dto = new FakeStoreProductDto();
+
+        dto.setId(product.getId());
+        dto.setTitle(product.getTitle());
+        dto.setPrice(product.getPrice());
+        dto.setDescription(product.getDescription());
+
+        // Assuming the category title is what needs to be set in the DTO's category field
+        if (product.getCategory() != null) {
+            dto.setCategory(product.getCategory().getTitle());
+        } else {
+            dto.setCategory(null); // or set to a default value as appropriate
+        }
+
+        return dto;
     }
 }

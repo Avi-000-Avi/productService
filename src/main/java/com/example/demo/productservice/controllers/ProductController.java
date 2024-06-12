@@ -2,6 +2,9 @@ package com.example.demo.productservice.controllers;
 
 import com.example.demo.productservice.models.Product;
 import com.example.demo.productservice.services.ProductServices;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -19,8 +22,8 @@ public class ProductController  {
 
     @GetMapping("/{id}")
     //Ideally should return a Product DTO
-    public Product getProductById(@PathVariable("id") Long id){
-        return productService.getProductById(id);
+    public ResponseEntity<Product> getProductById(@PathVariable("id") Long id){
+        return new ResponseEntity<>(productService.getProductById(id), HttpStatus.INTERNAL_SERVER_ERROR) ;
     }
 
     @GetMapping
@@ -41,7 +44,7 @@ public class ProductController  {
 
     @PatchMapping("/{id}")
     public Product updateProduct(@PathVariable("id") Long id,@RequestBody Product product){
-        return new Product();
+        return productService.updateProduct(id,product);
     }
 
     @DeleteMapping("/{id}")
