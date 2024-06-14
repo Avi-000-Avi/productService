@@ -24,7 +24,8 @@ public class FakeProductService implements ProductServices{
     public Product getProductById(Long Id) {
         FakeStoreProductDto fakeStoreProductDto =
                 restTemplate.getForObject("https://fakestoreapi.com/products/" + Id, FakeStoreProductDto.class);
-        return convertDtoToProduct(fakeStoreProductDto);
+//        return convertDtoToProduct(fakeStoreProductDto);
+        throw new RuntimeException();
     }
 
     @Override

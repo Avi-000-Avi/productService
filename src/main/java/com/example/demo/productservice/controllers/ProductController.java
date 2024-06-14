@@ -23,7 +23,11 @@ public class ProductController  {
     @GetMapping("/{id}")
     //Ideally should return a Product DTO
     public ResponseEntity<Product> getProductById(@PathVariable("id") Long id){
-        return new ResponseEntity<>(productService.getProductById(id), HttpStatus.INTERNAL_SERVER_ERROR) ;
+//        try {
+            return new ResponseEntity<>(productService.getProductById(id), HttpStatus.INTERNAL_SERVER_ERROR);
+//        } catch (Exception e) {
+//            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+//        }
     }
 
     @GetMapping
@@ -51,4 +55,16 @@ public class ProductController  {
     public Product deleteProductById(@PathVariable("id") Long id){
         return new Product();
     }
+
+//    @ExceptionHandler({RuntimeException.class,NullPointerException.class})
+//    public ResponseEntity<String> handleException(){
+//        System.out.println("Something Went Wrong");
+//        return new ResponseEntity<>("Something Went Wrong",HttpStatus.NOT_FOUND);
+//    }
+//
+//    @ExceptionHandler(IndexOutOfBoundsException.class)
+//    public ResponseEntity<String> handleIndexException(){
+//        System.out.println("Something Went Wrong");
+//        return new ResponseEntity<>("Something Went Wrong",HttpStatus.NOT_FOUND);
+//    }
 }
