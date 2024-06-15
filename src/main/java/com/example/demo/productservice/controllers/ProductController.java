@@ -1,5 +1,6 @@
 package com.example.demo.productservice.controllers;
 
+import com.example.demo.productservice.exceptions.ProductLimitReachedException;
 import com.example.demo.productservice.models.Product;
 import com.example.demo.productservice.services.ProductServices;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,10 @@ public class ProductController  {
 
     @GetMapping("/{id}")
     //Ideally should return a Product DTO
-    public ResponseEntity<Product> getProductById(@PathVariable("id") Long id){
+    public ResponseEntity<Product> getProductById(@PathVariable("id") Long id) throws ProductLimitReachedException {
+        if(id>=0){
+            throw new ProductLimitReachedException("There can be max 100 items");
+        }
 //        try {
             return new ResponseEntity<>(productService.getProductById(id), HttpStatus.INTERNAL_SERVER_ERROR);
 //        } catch (Exception e) {
@@ -66,5 +70,10 @@ public class ProductController  {
 //    public ResponseEntity<String> handleIndexException(){
 //        System.out.println("Something Went Wrong");
 //        return new ResponseEntity<>("Something Went Wrong",HttpStatus.NOT_FOUND);
+//    }
+//    @org.springframework.web.bind.annotation.ExceptionHandler({RuntimeException.class})
+//    public ResponseEntity<String> handleException(){
+//        System.out.println("Something Went Wrong");
+//        return new ResponseEntity<>("Something Went Wrong", HttpStatus.INTERNAL_SERVER_ERROR);
 //    }
 }
