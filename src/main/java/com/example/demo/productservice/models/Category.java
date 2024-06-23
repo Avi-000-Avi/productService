@@ -1,11 +1,12 @@
 package com.example.demo.productservice.models;
 
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class Category {
-    private long id;
+@Entity
+public class Category extends BaseModel{
     private String title;
 }

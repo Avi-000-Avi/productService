@@ -3,6 +3,7 @@ package com.example.demo.productservice.controllers;
 import com.example.demo.productservice.exceptions.ProductLimitReachedException;
 import com.example.demo.productservice.models.Product;
 import com.example.demo.productservice.services.ProductServices;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +18,9 @@ public class ProductController  {
 
     private  ProductServices productService;
 
-    ProductController(ProductServices productService){
+    //@Qualifier("selfProductService")
+
+    ProductController( ProductServices productService){
         this.productService = productService;
     }
 
