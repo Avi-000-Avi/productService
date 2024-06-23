@@ -23,22 +23,17 @@ public class ProductController  {
 
     @GetMapping("/{id}")
     //Ideally should return a Product DTO
-    public ResponseEntity<Product> getProductById(@PathVariable("id") Long id) throws ProductLimitReachedException {
-        if(id>=0){
-            throw new ProductLimitReachedException("There can be max 100 items");
-        }
-//        try {
-            return new ResponseEntity<>(productService.getProductById(id), HttpStatus.INTERNAL_SERVER_ERROR);
-//        } catch (Exception e) {
-//            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    public ResponseEntity<Product> getProductbyId(@PathVariable("id") Long id){
+//        if(!tokenService.validateToken(token)) {
+//            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
 //        }
+        return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
     }
 
     @GetMapping
-    public List<Product> getAllProducts(){
+    public List<Product> getAllProducts() {
         return productService.getAllProducts();
     }
-
 
     @PostMapping
     public Product createProduct(@RequestBody Product product){

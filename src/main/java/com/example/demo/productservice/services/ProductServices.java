@@ -1,7 +1,6 @@
 package com.example.demo.productservice.services;
 
 import com.example.demo.productservice.models.Product;
-
 import java.util.List;
 
 public interface ProductServices {
@@ -17,3 +16,5 @@ public interface ProductServices {
 
     void deleteProduct(Long Id);
 }
+
+
