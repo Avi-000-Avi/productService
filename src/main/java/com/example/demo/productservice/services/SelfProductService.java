@@ -1,6 +1,7 @@
 package com.example.demo.productservice.services;
 
 import com.example.demo.productservice.models.Product;
+import com.example.demo.productservice.repos.ProductRepo;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,12 @@ import java.util.List;
 @Service("selfProductService")
 @Primary
 public class SelfProductService implements  ProductServices{
+
+    private ProductRepo productRepo;
+
+    public SelfProductService(ProductRepo productRepo){
+        this.productRepo = productRepo;
+    }
 
     @Override
     public Product getProductById(Long Id) {
@@ -22,8 +29,8 @@ public class SelfProductService implements  ProductServices{
 
     @Override
     public Product createProduct(Product product) {
-
-        return null;
+        Product savedProduct = productRepo.save(product);
+        return savedProduct;
     }
 
     @Override

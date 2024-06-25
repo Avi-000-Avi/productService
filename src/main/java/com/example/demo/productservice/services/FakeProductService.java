@@ -77,6 +77,7 @@ public class FakeProductService implements ProductServices{
 
         // Assuming Category can be created with just the title from the DTO
         Category category = new Category();
+        category.setId(0L);
         category.setTitle(dto.getCategory());
         product.setCategory(category);
 
