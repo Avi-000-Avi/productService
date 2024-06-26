@@ -39,8 +39,10 @@ public class ProductController  {
     }
 
     @PostMapping
-    public Product createProduct(@RequestBody Product product){
-        return new Product();
+    public Product createProduct(@RequestBody Product product) {
+
+        // You can create a package product validations and productValidations.validateProduct() use to validate
+        return productService.createProduct(product);
     }
 
     @PutMapping("/{id}")
