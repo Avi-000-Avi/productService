@@ -21,11 +21,11 @@ public interface ProductRepo extends JpaRepository<Product, Long> {
     @Override
     Product save(Product product); //  create and update
 
-    //HQL
-    @Query("select p.title,p.description from Product  p where p.id=:id")
-    ProductwithTitleandDesc someRandomQuery(@Param("id") Long id);
-
-    //SQL
-    @Query(value = "select title,description from product where id = :id",nativeQuery = true)
-    ProductwithTitleandDesc someRandomQuery(@Param("id") Long id);
+//    //HQL
+//    @Query("select p.title,p.description from Product  p where p.id=:id")
+//    ProductwithTitleandDesc someRandomQuery(@Param("id") Long id);
+//
+//    //SQL
+//    @Query(value = "select title,description from product where id = :id",nativeQuery = true)
+//    ProductwithTitleandDesc someRandomQuery(@Param("id") Long id);
 }

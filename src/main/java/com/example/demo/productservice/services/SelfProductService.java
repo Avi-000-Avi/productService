@@ -47,6 +47,8 @@ public class SelfProductService implements  ProductServices{
         }
 
         //Another way categoryRepo.findByTitle(product.getCategory().getId())
+
+        product.setCreatedAt("15th June");
         Product savedProduct = productRepo.save(product);
         return savedProduct;
     }
