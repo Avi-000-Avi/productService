@@ -8,11 +8,13 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 
 @Service("selfProductService")
-@Primary
+//@Primary
 public class SelfProductService implements  ProductServices{
 
     private ProductRepo productRepo;
@@ -48,7 +50,7 @@ public class SelfProductService implements  ProductServices{
 
         //Another way categoryRepo.findByTitle(product.getCategory().getId())
 
-        product.setCreatedAt("15th June");
+        product.setCreatedAt(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")));
         Product savedProduct = productRepo.save(product);
         return savedProduct;
     }

@@ -3,6 +3,7 @@ package com.example.demo.productservice.controllers;
 import com.example.demo.productservice.exceptions.ProductLimitReachedException;
 import com.example.demo.productservice.models.Product;
 import com.example.demo.productservice.services.ProductServices;
+import com.example.demo.productservice.services.TokenService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -18,18 +19,23 @@ public class ProductController  {
 
     private  ProductServices productService;
 
+    private TokenService tokenService;
+
     //@Qualifier("selfProductService")
 
-    ProductController( ProductServices productService){
+    ProductController( ProductServices productService, TokenService tokenService){
         this.productService = productService;
+        this.tokenService = tokenService;
+
     }
 
-    @GetMapping("/{id}")
     //Ideally should return a Product DTO
+    @GetMapping("/{id}")
     public ResponseEntity<Product> getProductbyId(@PathVariable("id") Long id){
 //        if(!tokenService.validateToken(token)) {
 //            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
 //        }
+        System.out.println("Andar aa toh gaya");
         return new ResponseEntity<>(productService.getProductById(id), HttpStatus.OK);
     }
 

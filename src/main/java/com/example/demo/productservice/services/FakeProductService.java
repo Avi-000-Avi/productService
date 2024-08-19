@@ -3,6 +3,7 @@ package com.example.demo.productservice.services;
 import com.example.demo.productservice.dtos.FakeStoreProductDto;
 import com.example.demo.productservice.models.Category;
 import com.example.demo.productservice.models.Product;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service("fakeProductService")
+@Primary
 public class FakeProductService implements ProductServices{
 
     //One way to call product service
