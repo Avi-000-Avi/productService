@@ -12,14 +12,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()  // Disable CSRF for REST API
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/products/{id}").authenticated()
-//                        //.authenticated()
-//                        .hasAuthority("SCOPE_ADMIN")
                         .anyRequest().permitAll()
                 )
-                .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
         return http.build();
     }
-
 }
