@@ -4,6 +4,7 @@ import com.example.demo.productservice.dtos.FakeStoreProductDto;
 import com.example.demo.productservice.models.Category;
 import com.example.demo.productservice.models.Product;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -18,17 +19,38 @@ public class FakeProductService implements ProductServices{
     //RestTemplate is a dependency by a constructor injection
     private RestTemplate restTemplate;
 
-    public FakeProductService(RestTemplate restTemplate) {
+    private RedisTemplate<String, Object> redisTemplate;
+
+    public FakeProductService(RestTemplate restTemplate,RedisTemplate<String, Object> redisTemplate) {
         this.restTemplate = restTemplate;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
-    public Product getProductById(Long Id) {
+    public Product getProductById(Long id) {
+        // Check if product exists in cache
+        Product product = (Product) redisTemplate.opsForHash().get("PRODUCTS", "PRODUCTS_" + id);
+
+        if (product != null) {
+            // Cache HIT
+            return product;
+        }
+
+        // Fetch product from external API
         FakeStoreProductDto fakeStoreProductDto =
-                restTemplate.getForObject("https://fakestoreapi.com/products/" + Id, FakeStoreProductDto.class);
-//        return convertDtoToProduct(fakeStoreProductDto);
-        throw new RuntimeException();
+                restTemplate.getForObject("https://fakestoreapi.com/products/" + id, FakeStoreProductDto.class);
+
+        // Assuming convertDtoToProduct is a method to convert FakeStoreProductDto to Product
+        if (fakeStoreProductDto != null) {
+            product = convertDtoToProduct(fakeStoreProductDto);
+            redisTemplate.opsForHash().put("PRODUCTS", "PRODUCTS_" + product.getId(), product);
+            return product;
+        }
+
+        // Return null or throw an exception if product not found
+        return null;
     }
+
 
     @Override
     public List<Product> getAllProducts() {
